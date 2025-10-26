@@ -3,7 +3,7 @@ import { PORT } from './config/env.js';
 
 import authRouter from './routes/auth.routes.js';
 import userRouter from './routes/user.routes.js';
-import propertyRouter from './routes/property.routes.js';
+import listingRouter from './routes/listing.routes.js';
 import connectToDatabase from './database/mongodb.js';
 
 const app = express();
@@ -11,7 +11,7 @@ const app = express();
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', userRouter)
-app.use('/api/v1/properties', propertyRouter)
+app.use('/api/v1/listings', listingRouter)
 
 
 app.get('/', (req, res) => {
