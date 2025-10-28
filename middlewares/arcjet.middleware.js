@@ -9,9 +9,11 @@ const ArcjetMiddleware = async (req, res, next) => {
         "0.0.0.0";
 
         const decision = await aj.protect(req,
-            { requested: 1 },
-            // explicitly provide IP in case Arcjet fails to extract it
-            { ip: clientIp },
+            {
+                requested: 1,
+                // explicitly provide IP in case Arcjet fails to extract it
+                characteristics: { ip: clientIp }
+            }
         );
 
         if (decision.isDenied()) {
