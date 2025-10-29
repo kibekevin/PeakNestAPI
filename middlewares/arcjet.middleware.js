@@ -3,16 +3,9 @@ import aj from "../config/arcjet.js";
 
 const ArcjetMiddleware = async (req, res, next) => {
     try {
-        const clientIp =
-        req.headers["x-forwarded-for"]?.split(",")[0] ||
-        req.connection?.remoteAddress ||
-        "0.0.0.0";
-
         const decision = await aj.protect(req,
             {
-                requested: 1,
-                // explicitly provide IP in case Arcjet fails to extract it
-                characteristics: { ip: clientIp }
+                requested: 1
             }
         );
 
