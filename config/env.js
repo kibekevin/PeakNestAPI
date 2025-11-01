@@ -6,5 +6,6 @@ export const {
     PORT, NODE_ENV, 
     MONGODB_URI,
     JWT_SECRET, JWT_EXPIRES_IN,
-    ARCJET_KEY, ARCJET_ENV
+    ARCJET_KEY, ARCJET_ENV,
+    CLIENT_URL
 } = process.env;

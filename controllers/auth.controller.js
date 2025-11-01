@@ -73,6 +73,14 @@ export const signIn = async (req, res, next) => {
             throw error;
         }
 
+        const userInfo = {
+            username: user.name,
+            userEmail: user.email,
+            userId: user._id,
+            avatar: user.avatar,
+            createdAt: user.createdAt
+        }
+
         // Generate JWT token
         const token = jwt.sign({ userId: user._id }, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN});
 
@@ -89,7 +97,7 @@ export const signIn = async (req, res, next) => {
             success: true,
             message: 'Sign-in successful',
             data: {
-                user,
+                userInfo,
                 token
             }
         })
