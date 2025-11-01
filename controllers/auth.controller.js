@@ -76,6 +76,14 @@ export const signIn = async (req, res, next) => {
         // Generate JWT token
         const token = jwt.sign({ userId: user._id }, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN});
 
+        // Save token in cookie
+        res.cookie("token", token, {
+            httpOnly: true,      // not accessible via JS
+            secure: false,  // only send over HTTPS in production, if set to true
+            //sameSite: "Strict",  // prevent CSRF
+            maxAge: 24 * 60 * 60 * 1000  // 1 day
+        })
+
         // Send response
         res.status(200).json({
             success: true,
@@ -96,6 +104,17 @@ export const signIn = async (req, res, next) => {
 export const signOut = async (req, res, next) => {
     try {
         // Sign-out logic
+        //res.clearCookie("token").status(200).json({ message: 'Logged Out Successfully' })
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: false,
+            //sameSite: "Strict"
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Sign-out successful"
+        });
     } catch (error) {
         next(error);
     }
