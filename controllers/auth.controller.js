@@ -82,7 +82,7 @@ export const signIn = async (req, res, next) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ userId: user._id }, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN});
+        const token = jwt.sign({ userId: user._id, isAdmin: user.isAdmin }, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN});
 
         // Save token in cookie
         res.cookie("token", token, {
