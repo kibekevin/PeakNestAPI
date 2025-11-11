@@ -5,14 +5,16 @@ import User from '../models/user.model.js';
 
 const authorize = async (req, res, next) => {
     try {
-        let token;
+        //let token;
 
-        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
-            token = req.headers.authorization.split(' ')[1];
-        }
+        // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+        //     token = req.headers.authorization.split(' ')[1];
+        // }
+
+        const token = req.cookies.token;
 
         if (!token) {
-            return res.status(401).json({ message: 'Unauthorized'})
+            return res.status(401).json({ message: 'Unauthorized no token'})
         }
 
         const decoded = jwt.verify(token, JWT_SECRET);
@@ -20,7 +22,7 @@ const authorize = async (req, res, next) => {
         const user = await User.findById(decoded.userId);
 
         if (!user) {
-            return res.status(401).json({ message: 'Unauthorized' });
+            return res.status(401).json({ message: 'Unauthorized no user found' });
         }
 
         req.user = user
