@@ -1,21 +1,23 @@
 import { Router } from "express";
+import authorize from "../middlewares/auth.middleware.js";
+import { addListing, deleteListing, getListing, getListings, updateListing } from "../controllers/listing.controller.js";
 
 
 const listingRouter = Router();
 
-listingRouter.get('/', (req, res) => res.send({ title: 'Get all listings endpoint' }));
+listingRouter.get('/', getListings);
 
-listingRouter.get('/:id', (req, res) => res.send({ title: 'Get listing by ID endpoint' }));
+listingRouter.get('/:id', getListing);
 
-listingRouter.post('/', (req, res) => res.send({ title: 'Create new listing endpoint' }));
+listingRouter.post('/', authorize ,addListing);
 
-listingRouter.put('/:id', (req, res) => res.send({ title: 'Update listing by ID endpoint' }));
+listingRouter.put('/:id', authorize ,updateListing);
 
-listingRouter.delete('/:id', (req, res) => res.send({ title: 'Delete listing by ID endpoint' }));
+listingRouter.delete('/:id', authorize ,deleteListing);
 
 listingRouter.get('/user/:id', (req, res) => res.send({ title: 'Get all user listings by their ID endpoint' }))
 
-listingRouter.put('/:id/bookmark', (req, res) => res.send({ title: 'Bookmark listing by its ID' }))
+listingRouter.put('/:id/bookmark', authorize ,(req, res) => res.send({ title: 'Bookmark listing by its ID' }))
 
 
 
