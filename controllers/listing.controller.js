@@ -3,8 +3,40 @@ import Listing from "../models/listing.model.js";
 
 export const getListings = async (req, res, next) => {
     try {
+        const query = req.query;
+        console.log(query) 
+
         //Get listings logic
-        const listings = await Listing.find()
+        const filter = {};
+
+        // City
+        if (query.city) {
+        filter.city = new RegExp(`^${query.city}$`, "i");
+        }
+
+        // Listing type
+        if (query.listingType) {
+        filter.listingType = new RegExp(`^${query.listingType}$`, "i");
+        }
+
+        // Property type
+        if (query.propetyType) {
+        filter.propetyType = new RegExp(`^${query.propertyType}$`, "i");
+        }
+
+        // Bedroom (allow 0 or any number)
+        if (query.bedroom !== undefined && query.bedroom !== "") {
+        filter.bedroom = Number(query.bedroom);
+        }
+
+        // Price range
+        filter.price = {
+        $gte: Number(query.minPrice || 0),
+        $lte: Number(query.maxPrice || 1000000000)
+        };
+
+        const listings = await Listing.find(filter);
+
 
         if (!listings) {
             const error = new Error('Unable to retrieve listings')
@@ -26,9 +58,11 @@ export const getListings = async (req, res, next) => {
 
 
 export const getListing = async (req, res, next) => {
+
     try {
         //Get listing by ID logic
         const listing = await Listing.findById(req.params.id).populate('userId', 'name email avatar')
+        
 
         if (!listing) {
             const error = new Error('listing not found');
