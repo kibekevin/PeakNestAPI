@@ -87,8 +87,8 @@ export const signIn = async (req, res, next) => {
         // Save token in cookie
         res.cookie("token", token, {
             httpOnly: true,      // not accessible via JS
-            secure: false,  // only send over HTTPS in production, if set to true
-            //sameSite: "Strict",  // prevent CSRF
+            secure: true,  // only send over HTTPS in production, if set to true
+            sameSite: "none",  // prevent CSRF
             maxAge: 24 * 60 * 60 * 1000  // 1 day
         })
 
