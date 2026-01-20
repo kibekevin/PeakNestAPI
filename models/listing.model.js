@@ -78,7 +78,7 @@ const listingSchema = new mongoose.Schema({
     },
     propertyType: { 
     type: String,
-    enum: ["apartment", "house", "condo", "land", "any"],
+    enum: ["apartment", "house", "condo", "land", "any", "villa", "townhouse", "farmhouse", "duplex", "studio", "office", "maisonette", "cottage", "chalet", "bungalow", "loft", "penthouse", "mansion", "cabin"],
     default: "any"
     },
     userId: {
