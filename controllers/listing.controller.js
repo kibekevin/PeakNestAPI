@@ -11,7 +11,7 @@ export const getListings = async (req, res, next) => {
 
         // City
         if (query.city) {
-        filter.city = new RegExp(`^${query.city}$`, "i");
+        filter.city = new RegExp(`${query.city}`, "i");
         }
 
         // Listing type
@@ -20,8 +20,8 @@ export const getListings = async (req, res, next) => {
         }
 
         // Property type
-        if (query.propetyType) {
-        filter.propetyType = new RegExp(`^${query.propertyType}$`, "i");
+        if (query.propertyType) {
+        filter.propertyType = new RegExp(`^${query.propertyType}$`, "i");
         }
 
         // Bedroom (allow 0 or any number)
