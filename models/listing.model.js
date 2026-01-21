@@ -41,7 +41,10 @@ const listingSchema = new mongoose.Schema({
     },
     price : {
         type: Number,
-        required: true
+        required: true,
+        get: function(value) {
+            return value ? value.toLocaleString() : value;
+        }
     },
     images : {
         type: [String],
@@ -86,7 +89,11 @@ const listingSchema = new mongoose.Schema({
     ref: "User",
     index: true },
     listingDetails: ListingDetailsSchema
-}, { timestamps: true })
+}, { 
+    timestamps: true,
+    toJSON: { getters: true },
+    toObject: { getters: true }
+})
 
 
 
